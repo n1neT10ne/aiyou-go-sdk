@@ -3,19 +3,19 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Go Version](https://img.shields.io/badge/Go-%3E%3D%201.16-blue.svg)](https://golang.org/dl/)
 
-Un SDK Go minimaliste et efficace pour interagir avec l'API AI.You. Conçu pour être simple d'utilisation tout en offrant une flexibilité maximale.
+A minimalist and efficient Go SDK for interacting with the AI.You API. Designed to be simple to use while offering maximum flexibility.
 
-## ✨ Caractéristiques
+## ✨ Features
 
-- 🎯 Interface simple et intuitive
-- 🤖 Deux fonctions principales :
-  - Lister les modèles disponibles
-  - Envoyer un message à un modèle ou un assistant, contrôle de la température
-- 🔄 Support du streaming pour les réponses en temps réel
-- ⚡ Gestion automatique des retries
-- 🛠️ Options de configuration flexibles
-- 🔍 Mode debug pour le développement
-- 🌡️ Contrôle de la température des réponses
+- 🎯 Simple and intuitive interface
+- 🤖 Two main functions:
+  - List available models
+  - Send messages to a model or assistant, with temperature control
+- 🔄 Streaming support for real-time responses
+- ⚡ Automatic retry handling
+- 🛠️ Flexible configuration options
+- 🔍 Debug mode for development
+- 🌡️ Response temperature control
 
 ## 📦 Installation
 
@@ -23,7 +23,7 @@ Un SDK Go minimaliste et efficace pour interagir avec l'API AI.You. Conçu pour 
 go get github.com/n1neT10ne/aiyou
 ```
 
-## 🚀 Utilisation
+## 🚀 Usage
 
 ```go
 package main
@@ -34,7 +34,7 @@ import (
 )
 
 func main() {
-    // Liste des modèles disponibles
+    // List available models
     models, err := aiyou.ListModels(
         "your-token",
         aiyou.WithDebug(true),
@@ -46,25 +46,25 @@ func main() {
         fmt.Printf("- %s\n", model.Name)
     }
 
-    // Configuration de base
+    // Basic configuration
     response, err := aiyou.Completion(
         "model-name",
         "your-token",
-        "votre message",
+        "your message",
     )
     if err != nil {
         panic(err)
     }
     fmt.Println(response)
 
-    // Avec options
+    // With options
     response, err = aiyou.Completion(
         "model-name",
         "your-token",
-        "votre message",
+        "your message",
         aiyou.WithDebug(true),
         aiyou.WithTemperature(0.7),
-        aiyou.WithSystemPrompt("prompt système"),
+        aiyou.WithSystemPrompt("system prompt"),
         aiyou.WithStream(true),
     )
 }
@@ -72,46 +72,46 @@ func main() {
 
 ## ⚙️ Options
 
-Le package supporte plusieurs options de configuration :
+The package supports several configuration options:
 
 ```go
-// Active le mode debug
+// Enable debug mode
 WithDebug(debug bool)
 
-// Définit la température pour la génération (0.0-2.0)
+// Set generation temperature (0.0-2.0)
 WithTemperature(temp float64)
 
-// Configure les tentatives en cas d'erreur
+// Configure retry behavior
 WithRetry(maxRetries int, delay time.Duration)
 
-// Définit le prompt système
+// Set system prompt
 WithSystemPrompt(prompt string)
 
-// Active le mode streaming
+// Enable streaming mode
 WithStream(stream bool)
 ```
 
-## 🔄 Mode Streaming
+## 🔄 Streaming Mode
 
-Le mode streaming permet de recevoir la réponse au fur et à mesure qu'elle est générée. Il est particulièrement utile pour les réponses longues ou pour afficher la réponse progressivement.
+Streaming mode allows receiving the response as it's being generated. It's particularly useful for long responses or to display the response progressively.
 
 ```go
 response, err := aiyou.Completion(
     "model-name",
     "your-token",
-    "votre message",
+    "your message",
     aiyou.WithStream(true),
 )
 ```
 
-En mode streaming :
-- La réponse est construite progressivement à partir des chunks reçus
-- Chaque chunk contient une partie de la réponse finale
-- Le mode debug affiche les chunks reçus et leur contenu
+In streaming mode:
+- The response is built progressively from received chunks
+- Each chunk contains a part of the final response
+- Debug mode displays received chunks and their content
 
-## ⚠️ Gestion des erreurs
+## ⚠️ Error Handling
 
-Le package définit plusieurs types d'erreurs :
+The package defines several error types:
 
 ```go
 var (
@@ -123,29 +123,29 @@ var (
 )
 ```
 
-## 🧪 Tests Unitaires
+## 🧪 Unit Tests
 
-Le package inclut une suite complète de tests unitaires. Pour les exécuter, vous devez définir votre token AI.You dans la variable d'environnement `AIYOU_TEST_TOKEN` :
+The package includes a complete suite of unit tests. To run them, you need to set your AI.You token in the `AIYOU_TEST_TOKEN` environment variable:
 
 ```bash
-export AIYOU_TEST_TOKEN="votre-token"
+export AIYOU_TEST_TOKEN="your-token"
 go test ./...
 ```
 
-Si la variable d'environnement n'est pas définie, les tests nécessitant une authentification seront automatiquement ignorés avec un message explicatif. Cela permet de :
-- Éviter de stocker des tokens directement dans le code
-- Faciliter l'intégration continue sans exposer de données sensibles
-- Permettre à chaque développeur d'utiliser son propre token de test
+If the environment variable is not set, tests requiring authentication will be automatically skipped with an explanatory message. This approach:
+- Avoids storing tokens directly in the code
+- Facilitates continuous integration without exposing sensitive data
+- Allows each developer to use their own test token
 
 ## 🔗 CLI
 
-Un outil en ligne de commande est disponible dans un projet séparé : [aiyou-cli](https://github.com/n1neT10ne/aiyou-cli). Cette interface en ligne de commande offre un moyen rapide et simple d'interagir avec l'API AI.You directement depuis votre terminal.
+A command-line tool is available in a separate project: [aiyou-cli](https://github.com/n1neT10ne/aiyou-cli). This CLI provides a quick and simple way to interact with the AI.You API directly from your terminal.
 
-## 📄 Licence
+## 📄 License
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👤 Auteur
+## 👤 Author
 
 **Cyrille BARTHELEMY**
 
